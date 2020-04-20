@@ -24,13 +24,30 @@ public class Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (Input.GetKey(KeyCode.KeypadEnter))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (!op && !newObj)
+            Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+
+            if(Physics.Raycast(myRay, out hitInfo))
             {
-                newObj = Instantiate(player, new Vector3(0, 2, 0), Quaternion.identity);
+                if (hitInfo.collider.CompareTag("Ball") || hitInfo.collider.CompareTag("Box") )
+                {
+                    Rigidbody rb = hitInfo.collider.GetComponent<Rigidbody>();
+
+                    if(rb)
+                    {
+                        rb.AddForce(-hitInfo.normal * 5, ForceMode.Impulse);
+                    }
+                    else if(hitInfo.collider.CompareTag("Tarjet"))
+                    {
+                        Destroy(hitInfo.collider.gameObject);
+                    }
+                }
             }
-        }*/
+
+
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
